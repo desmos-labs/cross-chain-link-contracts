@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "wormhole-solidity-sdk/interfaces/IWormhole.sol";
+import "../interfaces/IWormhole.sol";
 
 contract IBCSender {
     uint256 constant GAS_LIMIT = 50_000;
@@ -12,12 +12,10 @@ contract IBCSender {
     }
 
     function sendIBCPacket(
-        uint16 targetChain,
-        address targetAddress,
         string memory payload
     ) public payable {
         wormhole.publishMessage{
             value: wormhole.messageFee()
-        }(1, payload, 200);
+        }(1,  bytes(payload), 200);
     }
 }
