@@ -15,10 +15,8 @@ pub enum ExecuteMsg {
 #[derive(QueryResponses)]
 pub enum QueryMsg {}
 
-
 #[cw_serde]
 pub struct Payload {
     pub channel_id: String,
     pub packet: Binary,
 }
-

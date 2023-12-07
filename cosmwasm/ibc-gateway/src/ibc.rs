@@ -1,11 +1,12 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use crate::{ContractError, state::CHANNELS};
 use cosmwasm_std::{
     DepsMut, Env, Ibc3ChannelOpenResponse, IbcBasicResponse, IbcChannel, IbcChannelCloseMsg,
-    IbcChannelConnectMsg, IbcChannelOpenMsg, IbcOrder, IbcPacketAckMsg, IbcPacketReceiveMsg,
-    IbcPacketTimeoutMsg, IbcReceiveResponse, StdError, StdResult,
+    IbcChannelConnectMsg, IbcChannelOpenMsg, IbcChannelOpenResponse, IbcOrder, IbcPacketAckMsg,
+    IbcPacketReceiveMsg, IbcPacketTimeoutMsg, IbcReceiveResponse, StdError, StdResult,
 };
+
+use crate::state::CHANNELS;
 
 pub const IBC_APP_VERSION: &str = "cross-chain-link-v0";
 
@@ -14,26 +15,27 @@ pub fn ibc_channel_open(
     _deps: DepsMut,
     _env: Env,
     msg: IbcChannelOpenMsg,
-) -> Result<Ibc3ChannelOpenResponse, ContractError> {
+) -> StdResult<IbcChannelOpenResponse> {
     let channel = msg.channel();
+
     if channel.order != IbcOrder::Ordered {
-        return Err(ContractError::OnlyOrderedChannel {});
+        return Err(StdError::generic_err("Only supports ordered channels"));
     }
-    if channel.version.as_str() != IBC_APP_VERSION {
-        return Err(ContractError::Std(StdError::generic_err(format!(
-            "Must set version to `{IBC_APP_VERSION}`"
-        ))));
-    }
+
+    // In ibcv3 we don't check the version string passed in the message
+    // and only check the counterparty version.
     if let Some(counter_version) = msg.counterparty_version() {
         if counter_version != IBC_APP_VERSION {
-            return Err(ContractError::Std(StdError::generic_err(format!(
+            return Err(StdError::generic_err(format!(
                 "Counterparty version must be `{IBC_APP_VERSION}`"
-            ))));
+            )));
         }
     }
-    Ok(Ibc3ChannelOpenResponse {
-        version: IBC_APP_VERSION.into(),
-    })
+
+    // We return the version we need (which could be different than the counterparty version)
+    Ok(Some(Ibc3ChannelOpenResponse {
+        version: IBC_APP_VERSION.to_string(),
+    }))
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]

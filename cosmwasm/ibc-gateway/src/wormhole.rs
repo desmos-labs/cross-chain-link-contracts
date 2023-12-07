@@ -1,8 +1,7 @@
 ///! this file represents required wormhole contract methods from
 ///! https://github.com/wormhole-foundation/wormhole/tree/main/terra/contracts/wormhole
-
 use cosmwasm_schema::cw_serde;
-use cosmwasm_std::{Binary, StdError, Storage, StdResult};
+use cosmwasm_std::{Binary, StdError, StdResult, Storage};
 use cw_storage_plus::Map;
 use thiserror::Error;
 
@@ -42,17 +41,14 @@ pub struct ParsedVAA {
 }
 
 pub static GUARDIAN_SET_KEY: &[u8] = b"guardian_set";
-pub const GUARDIAN_SET : Map<&[u8], bool> = Map::new("guardian_set");
+pub const GUARDIAN_SET: Map<&[u8], bool> = Map::new("guardian_set");
 
 pub fn vaa_archive_add(storage: &mut dyn Storage, hash: &[u8]) -> StdResult<()> {
     GUARDIAN_SET.save(storage, hash, &true)
 }
 
-
 pub fn vaa_archive_check(storage: &dyn Storage, hash: &[u8]) -> bool {
-    GUARDIAN_SET.
-        load(storage, hash).
-        unwrap_or(false)
+    GUARDIAN_SET.load(storage, hash).unwrap_or(false)
 }
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -167,4 +163,3 @@ impl WormholeContractError {
         Err(self.std())
     }
 }
-
