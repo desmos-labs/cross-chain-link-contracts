@@ -87,6 +87,7 @@ async function main() {
     console.log("Execute evm contract with IBC packet...")
     let published = await evmContract.methods.sendIBCPacket(JSON.stringify(payload)).send();
     const { sequence } = web3.eth.abi.decodeLog(LogMessagePublishedABI, published.logs[0].data!, published.logs[1].topics!);
+    console.log(`Payload published to Wormhole, tx: ${published.transactionHash}`)
 
     // Retrieves Vaa bytes
     console.log("Get Vaa from Guardian Network...");
@@ -94,8 +95,9 @@ async function main() {
     const vaaBase64 = Buffer.from(vaa!).toString("base64");
 
     // Relay VAA to Cosmwasm gateway chain
-    await relayerClient.execute(relayerAccount.address, COSMWASM_CONTRACT!, { submit_vaa: { data: vaaBase64 } }, "auto");
-    console.log("IBC packet to Desmos relayed");
+    console.log("Submit Vaa to gateway chain...");
+    const result = await relayerClient.execute(relayerAccount.address, COSMWASM_CONTRACT!, { submit_vaa: { data: vaaBase64 } }, "auto");
+    console.log(`IBC packet to Desmos relayed, tx: ${result.transactionHash}`);
     console.log("Finished");
 }
 
