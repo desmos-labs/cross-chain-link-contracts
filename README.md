@@ -6,5 +6,15 @@ Cross chain link contracts is a set of contracts to create chain link via Wormho
 
 | Chain           | Chain ID | Contract Address                                                 |
 | --------------- | -------- | ---------------------------------------------------------------- |  
-| Polygon Testnet | Mumbai   | 0x8d396C02C02e3595E8dE0035F4bA4fd67bcB83C1                       |
-| Terra Testnet   | pisco-1  | terra1mj0hr7dwwexzux387hk53xgswkuryg2yvgtrpzfl494wvfsu9trsh8dxaz |
+| Polygon Testnet | Mumbai   | 0xff7aD632d39D169E2595Cc87591191a5F54E48A5                       |
+| Terra Testnet   | pisco-1  | terra18sy2gpk9w308e9k7dz8l64v4x78344kv5apz5fylr7cdnscvtuss6q8m9e |
+
+Channel to Desmos: channel-513
+
+## Quick start
+
+1. Setup `.env` using `.env.sample`
+2. Get faucet on three chains: EVM testnet, Terra2 testnet, Desmos testnet
+3. Create Desmos profile using DESMOS_MNEMONIC
+4. Run `yarn demo` to pass IBC packet
+5. Wait for script finished then the new chain link will be created

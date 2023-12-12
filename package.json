@@ -1,0 +1,29 @@
+{
+  "name": "cross-chain-link-contracts",
+  "version": "1.0.0",
+  "description": "Cross chain link contracts is a set of contracts to create chain link via Wormhole from Wormhole bridged chains.",
+  "main": "index.js",
+  "scripts": {
+    "evm-compile": "cd evm && npx solcjs ibc-sender/IBCSender.sol --abi --bin -o build",
+    "cosmwasm-compile": "cd cosmwasm/ibc-gateway && cargo optimize",
+    "sample": "cd scripts && ts-node demo.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.32.1",
+    "@cosmjs/crypto": "^0.32.1",
+    "@cosmjs/proto-signing": "^0.32.1",
+    "@cosmjs/stargate": "^0.32.1",
+    "@desmoslabs/desmjs": "^6.0.1",
+    "@desmoslabs/desmjs-types": "^6.0.1",
+    "@wormhole-foundation/connect-sdk": "^0.1.7",
+    "@wormhole-foundation/connect-sdk-cosmwasm": "^0.1.7",
+    "@wormhole-foundation/connect-sdk-evm": "^0.1.7",
+    "dotenv": "^16.3.1",
+    "ethereumjs-util": "^7.1.5",
+    "ethereumjs-wallet": "^1.0.2",
+    "solc": "^0.8.23-fixed",
+    "web3": "^4.3.0"
+  }
+}

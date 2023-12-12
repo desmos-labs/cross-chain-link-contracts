@@ -1,0 +1,4 @@
+node_modules/
+evm/build/
+
+.env
