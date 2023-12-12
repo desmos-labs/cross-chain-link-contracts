@@ -6,7 +6,7 @@
   "scripts": {
     "evm-compile": "cd evm && npx solcjs ibc-sender/IBCSender.sol --abi --bin -o build",
     "cosmwasm-compile": "cd cosmwasm/ibc-gateway && cargo optimize",
-    "sample": "cd scripts && ts-node demo.ts"
+    "demo": "cd scripts && ts-node demo.ts"
   },
   "author": "",
   "license": "ISC",
