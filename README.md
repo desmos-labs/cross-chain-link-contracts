@@ -13,7 +13,7 @@ Channel to Desmos: channel-513
 
 ## Quick start
 
-1. Setup `.env` using `.env.sample`
+1. Setup `.env` using `.env.sample` inside `scripts/`
 2. Get faucet on three chains: EVM testnet, Terra2 testnet, Desmos testnet
 3. Create Desmos profile using DESMOS_MNEMONIC
 4. Run `yarn demo` to pass IBC packet
